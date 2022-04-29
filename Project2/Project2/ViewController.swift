@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     var score = 0
     var correctAnswer = 0
     var counter = 1
+    var text = "Click"
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -27,6 +28,7 @@ class ViewController: UIViewController {
         button2.layer.borderColor = UIColor.lightGray.cgColor
         button3.layer.borderColor = UIColor.lightGray.cgColor
         askQuestion()
+         
     }
     
     func askQuestion(action: UIAlertAction! = nil){
@@ -36,8 +38,8 @@ class ViewController: UIViewController {
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
         title = "\(countries[correctAnswer].uppercased())"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Score : \(score)", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Question : \(counter)", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Show Score", style: .plain, target: self, action: #selector(showScore))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Question : \(counter)", style: UIBarButtonItem.Style.plain, target: self, action: nil)
     }
     @IBAction func buttonTapped(_ sender: UIButton) {
         var title : String?
@@ -51,7 +53,7 @@ class ViewController: UIViewController {
                 title = "Wrong"
                 score -= 1
             }
-            let alert = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
+            let alert = UIAlertController(title: title, message: "Your answer is correct and earn +1 point", preferredStyle: .alert)
             let okButton = UIAlertAction(title: "Continue", style: UIAlertAction.Style.default, handler: askQuestion)
             alert.addAction(okButton)
             present(alert, animated: true)
@@ -66,7 +68,9 @@ class ViewController: UIViewController {
         
     }
     
-
+    @objc func showScore(){
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Your Score : \(score)", style: .plain, target: self, action: nil)
+    }
 
 }
 
